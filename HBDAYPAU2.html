@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🎉</title>
+
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: url("pinkbg.jpg") repeat;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .container {
+    text-align: center;
+    z-index: 1;
+  }
+
+  /* 🎨 COLORFUL TEXT */
+  .title {
+    font-size: 28px;
+    font-weight: bold;
+    animation: rainbow 2s infinite;
+  }
+
+  @keyframes rainbow {
+    0% { color: hotpink; }
+    25% { color: orange; }
+    50% { color: purple; }
+    75% { color: red; }
+    100% { color: hotpink; }
+  }
+
+  /* 🎂 CAKE */
+  .cake {
+    margin-top: 30px;
+    display: none;
+    position: relative;
+  }
+
+  /* plate */
+  .cake::after {
+    content: "";
+    display: block;
+    width: 240px;
+    height: 12px;
+    background: #ddd;
+    border-radius: 50%;
+    margin: 10px auto 0;
+  }
+
+  /* candles */
+  .candles {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: -5px;
+    z-index: 2;
+    position: relative;
+  }
+
+  .candle {
+    width: 10px;
+    height: 40px;
+    background: repeating-linear-gradient(
+      45deg,
+      white,
+      white 4px,
+      hotpink 4px,
+      hotpink 8px
+    );
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .flame {
+    width: 14px;
+    height: 14px;
+    background: radial-gradient(circle, yellow 40%, orange 60%);
+    border-radius: 50%;
+    position: absolute;
+    top: -16px;
+    left: -2px;
+    animation: flicker 0.3s infinite alternate;
+  }
+
+  @keyframes flicker {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(1.2); opacity: 0.8; }
+  }
+
+  /* cake layers */
+  .layer {
+    margin: 0 auto;
+    border-radius: 15px;
+    position: relative;
+  }
+
+  .layer::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 0 0 15px 15px;
+  }
+
+  /* TOP (smallest) */
+  .layer:nth-child(2) {
+    width: 160px;
+    height: 45px;
+    background: #ffd6e8;
+  }
+
+  /* MIDDLE */
+  .layer:nth-child(3) {
+    width: 190px;
+    height: 50px;
+    background: #ffc8dd;
+  }
+
+  /* BOTTOM (biggest) */
+  .layer:nth-child(4) {
+    width: 220px;
+    height: 55px;
+    background: #ffafcc;
+  }
+
+  /* 💙 HEART OVERLAY */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(6px);
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 5;
+  }
+
+  .heart {
+    font-size: 60px;
+    cursor: pointer;
+  }
+
+  video {
+    width: 90%;
+    max-width: 350px;
+    display: none;
+    border-radius: 15px;
+  }
+
+  .continue {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    background: hotpink;
+    color: white;
+    display: none;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="title">🎉 HAPPY BIRTHDAY 🎉</div>
+
+  <div class="cake" id="cake">
+    <div class="candles">
+      <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+      <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+      <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+    </div>
+
+    <div class="layer"></div>
+    <div class="layer"></div>
+    <div class="layer"></div>
+  </div>
+</div>
+
+<!-- 💙 HEART + VIDEO -->
+<div class="overlay" id="overlay">
+  <div class="heart" onclick="showVideo()">💙</div>
+
+  <video id="vid" controls>
+    <source src="hbdaypau.mp4" type="video/mp4">
+  </video>
+
+  <button class="continue" onclick="closeOverlay()">Continue</button>
+</div>
+
+<script>
+  setTimeout(() => {
+    document.getElementById("cake").style.display = "block";
+  }, 2000);
+
+  function showVideo() {
+    document.querySelector(".heart").style.display = "none";
+    const vid = document.getElementById("vid");
+    vid.style.display = "block";
+    vid.play();
+
+    vid.onended = () => {
+      document.querySelector(".continue").style.display = "block";
+    };
+  }
+
+  function closeOverlay() {
+    document.getElementById("overlay").style.display = "none";
+  }
+
+  let blown = 0;
+  function blowCandle(candle) {
+    const flame = candle.querySelector(".flame");
+    if (flame) {
+      flame.style.display = "none";
+      blown++;
+    }
+
+    if (blown === 3) {
+      setTimeout(() => {
+        window.location.href = "HBDAYPAU3.html";
+      }, 1000);
+    }
+  }
+</script>
+
+</body>
+</html>
